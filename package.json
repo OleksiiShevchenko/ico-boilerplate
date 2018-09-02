@@ -1,23 +1,27 @@
 {
-  "name": "ico-test",
-  "version": "0.0.1",
-  "description": "",
-  "main": "",
-  "scripts": {
-    "start": "",
-    "test": ""
-  },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": ""
-  },
-  "homepage": "",
+  "name": "ico-template",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "bcoin": "^1.0.0-beta.15"
+    "bcoin": "^1.0.0-beta.15",
+    "express": "^4.16.3",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  },
+  "scripts": {
+    "client": "react-scripts start & npm run watch-css",
+    "server": "nodemon ./src/server/app.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }
