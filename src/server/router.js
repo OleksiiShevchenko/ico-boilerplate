@@ -1,29 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+const keygen = require('./routes/generateKeys');
+const getAddress = require('./routes/address');
+const handleUtxo = require('./routes/utxo');
+const handleBalance = require('./routes/balance');
 
-router.get('/', (req, res) => renderPage(res));
-
-
-router.get('/api/v1', (req, res) => {
-  res.send('api');
-});
-
+router.get('/keygen', keygen);
+router.post('/getAddress', getAddress);
+router.get('/utxo/:address', handleUtxo);
+router.get('/balance', handleBalance);
 
 
 module.exports = router;
 
-
-function renderPage (res) {
-  return res.status(200).send(`
-    <!doctype html>
-    <html>
-      <head>
-      </head>
-      <body>
-        <div id="root" style="width: 100%; height: 100%; position: relative;">
-          Hello world
-        </div>
-      </body>
-    </html>`);
-}

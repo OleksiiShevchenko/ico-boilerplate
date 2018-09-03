@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import './landing.scss';
+import './landing.css';
 
 export default class Landing extends Component {
 
   render () {
-
     return (
       <div className="landing">
         Landing
@@ -12,5 +11,4 @@ export default class Landing extends Component {
     );
 
   }
-
 }
