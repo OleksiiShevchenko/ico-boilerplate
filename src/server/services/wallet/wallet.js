@@ -71,7 +71,7 @@ class Wallet {
       return HDPublicKey
         .fromBase58(key, this.nework)
         .derive(index)
-        .toPublic().publicKey;
+        .publicKey;
     });
 
     const p2shMultisigScript = Script.fromMultisig(2, derivedPubKeys.length, derivedPubKeys);
@@ -83,9 +83,7 @@ class Wallet {
       return ring;
     });
 
-    const ringPubKeys = rings.map(r => r.publicKey);
-    const p2wshMultisigScript = Script.fromMultisig(2, ringPubKeys.length, ringPubKeys);
-    rings[0].script = p2wshMultisigScript;
+    rings[0].script = p2shMultisigScript;
     const p2wshAddress = rings[0].getAddress().toString();
 
     return {
@@ -107,6 +105,23 @@ class Wallet {
 
   getTx (txHash) {
     return electrumApi.getTx(txHash);
+  }
+
+  async getInputs (address) {
+    const utxos = await this.getUtxo(address);
+    const inputs = [];
+
+    for (const utxo of utxos) {
+      const tx = await this.getTx(utxo.tx_hash);
+      inputs.push({
+        rawTx: tx,
+        index: utxo.tx_pos,
+        address: address,
+        value: utxo.value,
+        height: utxo.height
+      });
+    }
+    return inputs;
   }
 
 }
