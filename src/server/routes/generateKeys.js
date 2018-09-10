@@ -1,21 +1,27 @@
 const wallet = require('../services/wallet/wallet');
 const clc = require("cli-color");
 const { writeKeysToFile } = require('../utils');
+const { keyStorage } = require('../models');
 
-module.exports = function (req, res) {
+const coins = ['BTC', 'ETH'];
+
+module.exports = async function (req, res) {
+  const { coin } = req.params;
+
+  if ( coins.indexOf(coin) < 0 ) throw new Error('Invalid coin');
 
   try {
-    const keys = wallet.generateKeys(3, 'BTC');
+    const keys = wallet.generateKeys(3, coin);
 
     console.log(clc.yellow.bold.underline('Write down mnemonic phrases, they cannot be restored if lost.'));
     keys.forEach(key => console.log(clc.cyan(key.mnemonic.phrase)));
 
     const publicToSave = keys.map(keyPair => keyPair.pubKey);
-    writeKeysToFile(JSON.stringify(publicToSave, null, 2));
+    keyStorage.saveKeys(publicToSave, coin);
 
     return res.json(keys);
   } catch (e) {
-    return res.error(e);
+    return res.end(e);
   }
 
 };

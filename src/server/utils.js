@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const createKeccakHash = require('keccak');
 
 
 const createTxFile = function (data) {
@@ -45,10 +46,26 @@ const readKeysFromFile = function (keys) {
 
 };
 
+const ethToChecksumAddress = function (address) {
+  address = address.toLowerCase().replace('0x', '');
+  const hash = createKeccakHash('keccak256').update(address).digest('hex');
+  let result = '0x';
+
+  for (let i = 0; i < address.length; i++) {
+    if (parseInt(hash[i], 16) >= 8) {
+      result += address[i].toUpperCase();
+    } else {
+      result += address[i];
+    }
+  }
+
+  return result
+};
 
 
 module.exports = {
   createTxFile,
   writeKeysToFile,
-  readKeysFromFile
+  readKeysFromFile,
+  ethToChecksumAddress
 };

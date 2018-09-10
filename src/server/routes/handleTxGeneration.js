@@ -4,16 +4,17 @@ const { createTxFile } = require('../utils');
 
 
 module.exports = async function (req, res) {
-  const { addresses } = req.body;
-  if (addresses.length == 0) throw new Error('ADDRESSES_NOT_SPECIFIED');
-
   try {
-    let inputs = [];
+    const addresses = await wallet.getAddressPool();
+    const flatArray = addresses.reduce((arr, set) => {
+      Object.keys(set).forEach(type => {
+        arr.push(set[type]);
+      });
+      return arr;
+    }, []);
 
-    for (const address of addresses) {
-      const inputsPerAddress = await wallet.getInputs(address);
-      inputs = inputs.concat(inputsPerAddress);
-    }
+    let inputs = await Promise.all(flatArray.map(address => wallet.getInputs(address)));
+    inputs = inputs.reduce((array, item) => array.concat(item), []);
 
     createTxFile(JSON.stringify(inputs, null, 2));
 

@@ -8,3 +8,4 @@ dump/
 .DS_Store
 keys/
 transactions/
+storage/

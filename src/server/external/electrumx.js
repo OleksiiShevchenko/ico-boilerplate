@@ -15,10 +15,11 @@ class ElectrumAPI {
 
   async connect () {
     const connection = this.getNode();
-    this.ecl = new eClient(connection.port, connection.host, 'ssl');
+    const ecl = new eClient(connection.port, connection.host, 'ssl');
 
     try {
-      await this.ecl.connect();
+      await ecl.connect();
+      return ecl;
     } catch (e) {
       await this.reconnect(connection);
     }
@@ -29,22 +30,22 @@ class ElectrumAPI {
     return this.connect();
   }
 
-  disconnect () {
-    if (this.ecl) this.ecl.close();
-    this.ecl = null;
+  disconnect (ecl) {
+    if (ecl) ecl.close();
   }
 
   async getUtxo (scriptHash) {
-    await this.connect();
-    const response = await this.ecl.blockchainScripthash_listunspent(scriptHash);
-    this.disconnect();
-    return response;
+    return this.execute(ecl => ecl.blockchainScripthash_listunspent(scriptHash));
   }
 
   async getTx (txHash) {
-    await this.connect();
-    const response = await this.ecl.blockchainTransaction_get(txHash);
-    this.disconnect();
+    return this.execute(ecl => ecl.blockchainTransaction_get(txHash));
+  }
+
+  async execute (fn) {
+    const ecl = await this.connect();
+    const response = await fn(ecl);
+    await this.disconnect(ecl);
     return response;
   }
 

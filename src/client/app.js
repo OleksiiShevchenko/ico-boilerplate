@@ -7,6 +7,9 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import configureStore from './redux/store';
 import Routes from './routes';
 
+import 'antd/dist/antd.css';
+
+
 const history = createHistory();
 const store = configureStore(history);
 

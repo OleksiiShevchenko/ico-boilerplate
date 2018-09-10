@@ -5,8 +5,10 @@ const app = express();
 const server = http.createServer(app);
 const router = require('./router');
 
+const { Storage } = require('./models');
 const bodyParser = require('body-parser');
 
+Storage.init();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
