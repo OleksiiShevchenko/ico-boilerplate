@@ -4,10 +4,6 @@ const config = require('../config');
 
 class ElectrumAPI {
 
-  constructor () {
-    this.ecl = null;
-  }
-
   getNode () {
     const { electrumNodes } = config;
     return electrumNodes[Math.floor(Math.random() * electrumNodes.length)];
