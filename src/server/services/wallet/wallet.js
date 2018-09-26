@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const reverse = require('buffer-reverse');
 const electrumApi = require('../../external/electrumx');
 const { indexStorage, keyStorage } = require('../../models');
-const { readKeysFromFile, ethToChecksumAddress } = require('../../utils');
+const { ethToChecksumAddress } = require('../../utils');
 
 const HDPrivateKey = bcoin.hd.PrivateKey;
 const HDPublicKey = bcoin.hd.PublicKey;
@@ -61,15 +61,9 @@ class Wallet {
     };
   }
 
-  generateKeys (number, coin) {
-    const generatedKeys = [];
-    for ( let i = 0; i < number; i++ ) {
-      const isGanache = (coin === 'ETH' && i == 0);
-      const keyPair = this.generateKeyPair(coin, isGanache);
-      generatedKeys.push(keyPair);
-    }
-
-    return generatedKeys;
+  generateKey (coin) {
+    const keyPair = this.generateKeyPair(coin);
+    return keyPair;
   }
 
   async generateAddressETH (index) {
@@ -102,7 +96,8 @@ class Wallet {
   }
 
   async generateAddressBTC (index) {
-    const keys = readKeysFromFile();
+    console.log(index);
+    const keys = await keyStorage.getKeys('BTC');
 
     const derivedPubKeys = keys.map(key => {
       return HDPublicKey
@@ -133,7 +128,7 @@ class Wallet {
 
   async newAddress (coin) {
     let lastIndex = await indexStorage.getIndex(coin);
-    const index = lastIndex ? lastIndex + 1 : 0;
+    const index = (lastIndex !== null) ? lastIndex + 1 : 0;
 
     const fnName = `generateAddress${coin}`;
     const address = await this[fnName](index);

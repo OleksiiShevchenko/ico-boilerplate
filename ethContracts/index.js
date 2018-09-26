@@ -30,9 +30,11 @@ async function getForwarderAddress () {
   try {
     const walletInstance = await wallet.deployed();
     const forwarderAddress = getNextContractAddress(walletInstance.address);
+    console.log(forwarderAddress);
 
     //deploy a new forwarder contract
     const forwarder = await walletInstance.createForwarder({from: web3.eth.accounts[0], gas: 500000});
+    console.log(await walletInstance.createForwarder.call());
 
     //attach an instance of a new forwarder to an address
     const fderInstance = fder.at(forwarderAddress);
@@ -111,6 +113,6 @@ async function sendTransaction (fromAddress, toAddress, amount) {
 
 //sendTransaction(web3.eth.accounts[0], '0xdfedaa3f50d8455ec22184cd5f5f6d82312e063a', 15000000000000000000);
 
-getBalance('0x067e78213ef70711a2f41e0981b5d22170423251');
+//getBalance('0x067e78213ef70711a2f41e0981b5d22170423251');
 
-//getForwarderAddress();
+getForwarderAddress();
