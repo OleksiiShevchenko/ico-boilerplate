@@ -1,8 +1,9 @@
-const wallet = require('../services/wallet/wallet');
+const wallet = require('../services/wallet');
 
 module.exports = async function (req, res) {
   try {
-    const addresses = await wallet.getAddressPool();
+    const { coin } = req.params;
+    const addresses = await wallet[coin].getAddressPool();
     return res.json(addresses);
   } catch (e) {
     console.error(e);

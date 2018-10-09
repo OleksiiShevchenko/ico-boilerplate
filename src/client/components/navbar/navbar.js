@@ -5,14 +5,11 @@ import cn from 'classnames';
 
 import {
   Alignment,
-  Button,
   Classes,
-  H5,
   Navbar,
   NavbarDivider,
   NavbarGroup,
   NavbarHeading,
-  Switch,
   Icon
 } from "@blueprintjs/core";
 

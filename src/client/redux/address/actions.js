@@ -29,3 +29,13 @@ export const listAddresses = coin => ({
   types: [LIST_ADDRESSES_REQUEST, LIST_ADDRESSES_SUCCESS, LIST_ADDRESSES_FAILURE],
   promise: api => api.address.listAddresses(coin),
 });
+
+
+export const GET_MASTER_REQUEST = `${prefix}/GET_MASTER_REQUEST`;
+export const GET_MASTER_SUCCESS = `${prefix}/GET_MASTER_SUCCESS`;
+export const GET_MASTER_FAILURE = `${prefix}/GET_MASTER_FAILURE`;
+
+export const getMasterAddresses = () => ({
+  types: [GET_MASTER_REQUEST, GET_MASTER_SUCCESS, GET_MASTER_FAILURE],
+  promise: api => api.address.getMasterAddresses(),
+});

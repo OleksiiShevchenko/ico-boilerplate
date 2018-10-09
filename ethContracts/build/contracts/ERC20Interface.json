@@ -49,9 +49,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.11;\n/**\n * Contract that exposes the needed erc20 token functions\n */\n\ncontract ERC20Interface {\n  // Send _value amount of tokens to address _to\n  function transfer(address _to, uint256 _value) public returns (bool success);\n  // Get the account balance of another account with address _owner\n  function balanceOf(address _owner) public constant returns (uint256 balance);\n}",
-  "sourcePath": "/Users/oleksiishevchenko/Development/projects/ico-boilerplate/ethContracts/contracts/ERC20Interface.sol",
+  "sourcePath": "/Users/oleksiishevchenko/Development/projects/blockchainCourse/ico-boilerplate/ethContracts/contracts/ERC20Interface.sol",
   "ast": {
-    "absolutePath": "/Users/oleksiishevchenko/Development/projects/ico-boilerplate/ethContracts/contracts/ERC20Interface.sol",
+    "absolutePath": "/Users/oleksiishevchenko/Development/projects/blockchainCourse/ico-boilerplate/ethContracts/contracts/ERC20Interface.sol",
     "exportedSymbols": {
       "ERC20Interface": [
         18
@@ -284,7 +284,7 @@
     "src": "0:396:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/oleksiishevchenko/Development/projects/ico-boilerplate/ethContracts/contracts/ERC20Interface.sol",
+    "absolutePath": "/Users/oleksiishevchenko/Development/projects/blockchainCourse/ico-boilerplate/ethContracts/contracts/ERC20Interface.sol",
     "exportedSymbols": {
       "ERC20Interface": [
         18
@@ -522,5 +522,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-09-17T14:40:17.848Z"
+  "updatedAt": "2018-10-09T14:28:10.705Z"
 }

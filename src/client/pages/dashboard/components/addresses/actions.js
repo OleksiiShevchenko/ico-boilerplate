@@ -1,9 +1,11 @@
 import {
   getIndex,
-  listAddresses
+  listAddresses,
+  getMasterAddresses
 } from '../../../../redux/address/actions';
 
 export default {
   getIndex,
-  listAddresses
+  listAddresses,
+  getMasterAddresses
 };

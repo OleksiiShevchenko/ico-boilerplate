@@ -2,7 +2,7 @@ import Base from './base';
 
 export default class Address extends Base {
   getAddress() {
-    return this.apiClient.get(`getAddress/BTC`);
+    return this.apiClient.get(`getAddress`);
   }
 
   getIndex(coin) {
@@ -11,5 +11,9 @@ export default class Address extends Base {
 
   listAddresses(coin) {
     return this.apiClient.get(`listAddresses/${coin}`);
+  }
+
+  getMasterAddresses() {
+    return this.apiClient.get(`ethMasterAddresses`);
   }
 }

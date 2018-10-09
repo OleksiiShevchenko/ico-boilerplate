@@ -6,12 +6,16 @@ import {
 
 import {
   derivationIndex,
-  addressList
+  addressList,
+  masterAddresses,
+  loading
 } from '../../../../redux/address/selectors';
 
 
 export default createStructuredSelector({
+  loading,
   coin,
   derivationIndex,
-  addressList
+  addressList,
+  masterAddresses
 });

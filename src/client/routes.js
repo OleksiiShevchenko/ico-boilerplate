@@ -1,11 +1,12 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Landing from './pages/landing';
 import Dashboard from './pages/dashboard';
 
 const Routes = () => (
   <Switch>
+    <Redirect from="/dashboard" exact to="/dashboard/transactions" />
     <Route exact path="/" component={Landing}/>
     <Route path="/dashboard" component={Dashboard}/>
   </Switch>

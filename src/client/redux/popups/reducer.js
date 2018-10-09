@@ -11,6 +11,15 @@ export default combineReducers({
       default:
         return state;
     }
+  },
+
+  txPopup (state = false, action) {
+    switch (action.type) {
+      case actions.TOGGLE_TRANSACTION:
+        return action.data;
+      default:
+        return state;
+    }
   }
 
 });

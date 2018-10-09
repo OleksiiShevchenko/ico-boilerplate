@@ -17,7 +17,7 @@ class ElectrumAPI {
       await ecl.connect();
       return ecl;
     } catch (e) {
-      await this.reconnect(connection);
+      return this.reconnect(connection);
     }
   }
 

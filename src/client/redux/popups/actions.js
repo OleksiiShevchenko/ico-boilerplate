@@ -7,3 +7,11 @@ export const toggleMnemonicPopup = isOpen => ({
   data: isOpen,
 });
 
+
+export const TOGGLE_TRANSACTION = `${prefix}/TOGGLE_TRANSACTION`;
+
+export const toggleTransactionPopup = isOpen => ({
+  type: TOGGLE_TRANSACTION,
+  data: isOpen,
+});
+

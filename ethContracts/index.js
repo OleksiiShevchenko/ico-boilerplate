@@ -12,7 +12,7 @@ const forwarderJson = require(forwarder);
 const BN = ethUtil.BN;
 
 
-const web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+const web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'));
 
 //load WalletSimple.sol contract from json
 const wallet = truffleContract(wSimpleJson);

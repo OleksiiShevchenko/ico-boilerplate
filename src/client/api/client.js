@@ -51,8 +51,6 @@ export default class ApiClient {
     if (download) req.responseType('blob');
     if (params) req.query(params);
     if (body) req.send(body);
-    if (this.token) req.set('x-taurus-auth', this.token);
-    req.set('x-taurus-admin', 1);
 
     return req.then(res => {
       if (res.type !== 'application/json') return res.xhr.response;
