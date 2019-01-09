@@ -20,9 +20,9 @@ export default class Landing extends Component {
         <h1>Yet another ICO</h1>
         <div>
           <h3>We appreciate your bitcoin donations to</h3> <br/>
-          P2SH Address: {btcAddresses && btcAddresses.p2shAddress} <br/>
-          Segwit Address: {btcAddresses && btcAddresses.p2wshAddress} <br/>
-          Segwit Nested Address: {btcAddresses && btcAddresses.p2shP2wshAddress} <br/>
+          P2SH Address: {btcAddresses && btcAddresses.addresses.p2shAddress} <br/>
+          Segwit Address: {btcAddresses && btcAddresses.addresses.p2wshAddress} <br/>
+          Segwit Nested Address: {btcAddresses && btcAddresses.addresses.p2shP2wshAddress} <br/>
         </div>
 
         <div>

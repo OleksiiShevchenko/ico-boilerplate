@@ -5,13 +5,13 @@ import {
 
 
 export default (props) => {
-  const { i, data, loading } = props;
+  const { index, data, loading } = props;
   if (loading) return null;
 
   return (
-    <li key={i}>
+    <li>
       <Callout>
-        <div><b>Index:</b> {i}</div>
+        <div><b>Index:</b> {index}</div>
         <div><b>Forwarder address:</b> {data}</div>
       </Callout>
     </li>

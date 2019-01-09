@@ -12,6 +12,7 @@ const listAddresses = require('./routes/listAddresses');
 const deleteKey = require('./routes/deleteKey');
 const getMasterAddresses = require('./routes/getMasterAddresses');
 const handleETHTransfer = require('./routes/handleETHTransfer');
+const handleBroadcast = require('./routes/handleBroadcast');
 
 
 
@@ -30,6 +31,8 @@ router.get('/listAddresses/:coin', listAddresses);
 router.get('/balance/:coin', handleBalance);
 router.post('/generateTx/:coin', handleTxGeneration);
 router.post('/transferETH', handleETHTransfer);
+
+router.post('/broadcast', handleBroadcast);
 
 
 module.exports = router;

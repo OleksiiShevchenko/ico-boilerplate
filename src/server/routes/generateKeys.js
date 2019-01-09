@@ -1,5 +1,4 @@
-const wallet = require('../services/wallet/wallet');
-const btcWallet = require('../services/wallet/BTC');
+const wallet = require('../services/wallet');
 
 const clc = require("cli-color");
 const { keyStorage } = require('../models');
@@ -15,9 +14,9 @@ module.exports = async function (req, res, next) {
 
   try {
     const keys = await keyStorage.getKeys(coin);
-    if (keys.length = 3) throw new Error('Max 3 keys allowed');
+    if (keys.length == 3) throw new Error('Max 3 keys allowed');
 
-    const key = btcWallet.generateKey(coin);
+    const key = wallet[coin].generateKey(coin);
 
     console.log(clc.yellow.bold.underline('Write down mnemonic phrases, they cannot be restored if lost.'));
     console.log(clc.cyan(key.mnemonic.phrase));

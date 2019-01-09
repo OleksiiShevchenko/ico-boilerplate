@@ -7,6 +7,7 @@ const HDPublicKey = bcoin.hd.PublicKey;
 
 const ethUtil = require('ethereumjs-util');
 const BN = ethUtil.BN;
+const BigNumber = require('bignumber.js');
 const {ethToChecksumAddress} = require('../../utils');
 
 const truffleContract = require('truffle-contract');
@@ -75,6 +76,11 @@ class ETH extends Wallet {
     return this.web3.eth.getTransactionCount(address);
   }
 
+  async getSequenceId () {
+    const walletInstance = await this.wallet.deployed();
+    return walletInstance.getNextSequenceId.call();
+  }
+
   async getMasterAddresses() {
     const keys = await keyStorage.getKeys('ETH');
     const DERIVATION_INDEX = 0;
@@ -85,11 +91,25 @@ class ETH extends Wallet {
       const formattedAddress = `0x${address.toString('hex')}`;
       const checksumAddress = ethToChecksumAddress(formattedAddress);
       return {
-        checksumAddress
+        checksumAddress,
+        index: DERIVATION_INDEX
       }
     });
 
     return addresses;
+  }
+
+  async broadcast(rawTx) {
+    const hash = await this.web3.eth.sendRawTransaction(rawTx);
+    return hash;
+  }
+
+  getMasterAddressNonce (addresses) {
+    return addresses.map(item => {
+      const nonce = this.web3.eth.getTransactionCount(item.checksumAddress);
+      item.nonce = nonce;
+      return item;
+    });
   }
 
   async getAddressPool () {
@@ -103,6 +123,25 @@ class ETH extends Wallet {
     const balance = this.web3.eth.getBalance(address).toString();
     console.log(clc.yellow.bold(`Balance on wallet ${balance}`));
     return balance;
+  }
+
+  estimateGas (to, amount) {
+
+    const gas = this.web3.eth.estimateGas({
+      from: this.web3.eth.accounts[0],
+      to: to,
+      amount: amount,
+      data: '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+    });
+
+    const gasLimit = gas * 2;
+    const gasPrice = this.web3.eth.gasPrice;
+
+    return {
+      gas: gas.toString(),
+      gasPrice: gasPrice.toString(),
+      gasLimit
+    };
   }
 
   async sendTransaction (fromAddress, toAddress, amount) {
@@ -131,11 +170,10 @@ class ETH extends Wallet {
       const txAmount = amount || (balance - gasLimit*gasPrice);
       console.log(clc.green.bold(`Amount: ${txAmount}`));
 
-
       const transaction = {
         from: fromAddress,
         to: toAddress,
-        value: new BN(txAmount.toString(16), 16),
+        value: this.coinsToWei(txAmount).toString(),
         gas: new BN(gasLimit.toString(16), 16),
         gasPrice: new BN(gasPrice.toString(16), 16),
       };
@@ -147,6 +185,23 @@ class ETH extends Wallet {
     } catch (e) {
       throw new Error(e);
     }
+  }
+
+  generateKeyPair () {
+    const mnemonic = this.generateMnemonic();
+    const privateKey = this.generatePrivateKey(mnemonic.phrase, this.derivationPath);
+    const pubKey = this.generatePubKey(privateKey);
+
+    return {
+      mnemonic,
+      privateKey: privateKey.toBase58(),
+      pubKey: pubKey.toBase58()
+    };
+  }
+
+  coinsToWei(coins) {
+    const WEI_MULT = 10 ** 18;
+    return new BigNumber(coins).multipliedBy(WEI_MULT);
   }
 
 

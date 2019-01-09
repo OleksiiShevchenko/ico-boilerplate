@@ -37,7 +37,7 @@ class Wallet {
 
   async addNewAddress () {
     let lastIndex = await indexStorage.getIndex(this.coin);
-    const index = (lastIndex !== null) ? lastIndex + 1 : 0;
+    const index = (!isNaN(lastIndex)) ? lastIndex + 1 : 0;
     const address = await this.generateAddress(index);
     indexStorage.saveIndex(index, this.coin);
     return address;

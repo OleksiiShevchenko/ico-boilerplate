@@ -25,7 +25,7 @@ export default class Addresses extends Component {
   renderAddressList () {
     const { coin, addressList, loading } = this.props;
     return addressList.map((item, i) => {
-      return (coin === 'BTC') ? (<AddressItemBTC key={i} data={item} loading={loading} />) : (<AddressItemETH key={i} data={item} loading={loading} />);
+      return (coin === 'BTC') ? (<AddressItemBTC key={item.derivationIndex} index={i} data={item} loading={loading} />) : (<AddressItemETH key={item} index={i} data={item} loading={loading} />);
     })
   }
 

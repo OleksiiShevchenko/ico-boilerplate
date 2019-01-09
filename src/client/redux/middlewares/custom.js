@@ -3,7 +3,7 @@ import * as addressActions from '../address/actions';
 import * as coinActions from '../coins/actions';
 import * as txActions from '../transactions/actions';
 import * as popupsActions from '../popups/actions';
-
+import { satoshiToCoins } from '../../../utils';
 
 export default function coinMiddleware() {
   return store => next => action => {
@@ -48,5 +48,15 @@ export default function coinMiddleware() {
       anchor.setAttribute("download", "transaction.json");
       anchor.click();
     }
+
+    if (
+      action &&
+      action.type === `${txActions.prefix}/GET_BALANCE_SUCCESS`
+    ) {
+      const { coins: { coin }, transactions: { balance } } = store.getState();
+      if (coin === 'BTC') store.dispatch(txActions.handleInput(satoshiToCoins(balance).toString(), 'amount', true));
+    }
+
+
   };
 }

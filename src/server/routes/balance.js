@@ -11,10 +11,9 @@ module.exports = async function (req, res) {
     }
 
     const addresses = await wallet[coin].getAddressPool();
-
-    const flatArray = addresses.reduce((arr, set) => {
-      Object.keys(set).forEach(type => {
-        arr.push(set[type]);
+    const flatArray = addresses.reduce((arr, data) => {
+      Object.keys(data.addresses).forEach(type => {
+        arr.push(data.addresses[type]);
       });
       return arr;
     }, []);

@@ -44,14 +44,18 @@ class BTC extends Wallet {
     const p2shP2wshAddress = rings[0].getNestedAddress().toString();
 
     return {
-      p2shAddress,
-      p2wshAddress,
-      p2shP2wshAddress
+      derivationIndex: index,
+      addresses: {
+        p2shAddress,
+        p2wshAddress,
+        p2shP2wshAddress
+      }
     };
   }
 
   async getAddressPool () {
-    const lastIndex = await indexStorage.getIndex(this.coin);
+    let lastIndex = await indexStorage.getIndex(this.coin);
+    if (!lastIndex) lastIndex = 0;
     return Promise.all(Array(lastIndex + 1).fill(null).map((_, i) => this.generateAddress(i)));
   }
 
@@ -88,7 +92,7 @@ class BTC extends Wallet {
     return inputs;
   }
 
-  generateKeyPair (coin) {
+  generateKeyPair () {
     const mnemonic = this.generateMnemonic();
     const privateKey = this.generatePrivateKey(mnemonic.phrase, this.derivationPath);
     const pubKey = this.generatePubKey(privateKey);
