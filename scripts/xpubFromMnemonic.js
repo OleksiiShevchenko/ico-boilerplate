@@ -1,6 +1,7 @@
 const bcoin = require('bcoin');
 const PrivateKey = bcoin.hd.PrivateKey;
-const mnemonic = "debate error because game noise neglect off crater warfare lizard man play coral trade detect energy dream lottery royal cousin parrot north oppose permit";
+const mnemonic = "skin used toilet expire vendor language crush guess jar uphold spray bag silk vacant salmon nerve endorse series tube lunar butter ski hurry fine";
+//const mnemonic = "wing omit room mystery like artefact cross avoid nice layer collect shove stock assault tired hood kid year unit bicycle airport hood right stand";
 const network = "main";
 
 function getXPUBFromMnemonic (path) {
