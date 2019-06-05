@@ -9,4 +9,4 @@ dump/
 keys/
 transactions/
 storage/
-ethContracts/build
+ethContracts/build/
